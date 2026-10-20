@@ -328,11 +328,6 @@ O cliente é opcional no pedido para permitir vendas de balcão sem cadastro, ma
 ---
 
 
-
-
-
-
-
 ## 7\. Diagrama Entidade-Relacionamento (DER)
 
 *(vale 20% — é o item de maior peso da entrega)*
@@ -376,25 +371,7 @@ Se o grupo usou alguma ferramenta de IA (ChatGPT, Claude, Gemini, Perplexity etc
 
 ---
 
-## Critérios Atitudinais (20%)
 
-**Estes critérios NÃO constam explicitamente como item de entrega no README.** Eles são avaliados por meio de **Avaliação 360º entre os integrantes do grupo** (cada membro avalia os colegas de equipe) e, no caso da Colaboração, também pela **colaboração equilibrada no histórico de commits** do repositório GitHub — não pela leitura do restante do repositório nem pela apresentação:
 
-- **Participação (5%):** envolvimento nas discussões técnicas e nas decisões do grupo.  
-- **Comprometimento (5%):** cumprimento de prazos e responsabilidades assumidas.  
-- **Colaboração (5%):** respeito às contribuições dos colegas, cooperação na construção do projeto e colaboração equilibrada no histórico de commits do repositório GitHub.  
-- **Autonomia (5%):** busca independente de soluções e proposta de melhorias.
 
----
 
-## Resumo dos Pesos
-
-| Dimensão | Peso total |
-| :---- | :---- |
-| Conceitual (contexto, requisitos/regras, modelagem, justificativa técnica) | 30% |
-| Procedimental (requisitos, fluxogramas, dicionário de dados, DER) | 50% |
-| Atitudinal (participação, comprometimento, colaboração, autonomia) | 20% |
-
-**Entrega final:** README.md completo \+ DER \+ Dicionário de Dados em HTML (com exceção dos cursos GTI) anexado no repositório GitHub do grupo.
-
-&nbsp;
