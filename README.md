@@ -109,36 +109,39 @@ A **cozinha** é a área que mais depende de trabalho em conjunto: o pedido prec
 ---
 
 ## 5\. Dicionário de Dados Conceitual (Preliminar)
-
-### Entidade: FORNECEDOR
+###  Entidade: FORNECEDOR
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_fornecedor | Identificador único do fornecedor | Obrigatório; não se repete |
 | nome_empresa | Nome da empresa fornecedora | Obrigatório |
 | contato | Forma de contato (telefone, e-mail ou responsável) | Opcional |
 
+Um fornecedor pode ter nenhuma ou várias compras.
+
 ### Entidade: COMPRA
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_compra | Identificador único da compra | Obrigatório; não se repete |
 | data_compra | Data da compra de insumos/produtos | Obrigatório |
-| valor_total | Valor total da compra em reais | Obrigatório; soma de quantidade × custo_unitario dos itens |
+| valor_total | Valor total da compra em reais (atributo derivado) | Obrigatório; calculado pela soma de quantidade × custo_unitario dos itens |
 
-Toda compra pertence a exatamente um fornecedor. Um fornecedor pode ter nenhuma ou várias compras.
+Toda compra pertence a exatamente um fornecedor.
 
-### Entidade: ITEM DE COMPRA (relacionamento "inclui" entre COMPRA e PRODUTO)
+### Entidade: ITEM DE COMPRA
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | quantidade | Quantidade do produto comprada | Obrigatório; maior que zero |
 | custo_unitario | Custo de cada unidade na compra, em reais | Obrigatório; maior que zero |
 
-Uma compra inclui de 1 a n produtos. Um produto pode estar em nenhuma ou várias compras.
+Relacionamento “inclui” entre COMPRA e PRODUTO. Uma compra inclui de 1 a n produtos; um produto pode estar em nenhuma ou várias compras.
 
-###  Entidade: CATEGORIA
+### Entidade: CATEGORIA
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_categoria | Identificador único da categoria | Obrigatório; não se repete |
 | nome_categoria | Nome da categoria (ex.: refeições, bebidas, lanches) | Obrigatório |
+
+Uma categoria pode ter nenhum ou vários produtos.
 
 ### Entidade: PRODUTO
 | Atributo | Descrição | Regra de negócio associada |
@@ -149,7 +152,7 @@ Uma compra inclui de 1 a n produtos. Um produto pode estar em nenhuma ou várias
 | preco | Preço de venda em reais | Obrigatório; maior que zero |
 | quantidade_estoque | Quantidade disponível | Obrigatório; não pode ser negativa; baixo estoque gera aviso |
 
-Todo produto pertence a exatamente uma categoria. Uma categoria pode ter nenhum ou vários produtos.
+Todo produto pertence a exatamente uma categoria.
 
 ### Entidade: CLIENTE
 | Atributo | Descrição | Regra de negócio associada |
@@ -161,7 +164,7 @@ Todo produto pertence a exatamente uma categoria. Uma categoria pode ter nenhum 
 
 Um cliente pode fazer nenhum ou vários pedidos. Um pedido tem no máximo um cliente (pode não ter, em vendas de balcão).
 
-### Entidade: ENDERECO
+### Entidade: ENDEREÇO
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_endereco | Identificador único do endereço | Obrigatório; não se repete |
@@ -171,9 +174,9 @@ Um cliente pode fazer nenhum ou vários pedidos. Um pedido tem no máximo um cli
 | cep | Código postal | Formato 00000-000 |
 | complemento | Complemento (apartamento, bloco, referência) | Opcional |
 
-Todo cliente possui de 1 a n endereços. Todo endereço pertence a exatamente um cliente.
+Um cliente possui nenhum ou vários endereços (clientes de balcão podem não ter endereço cadastrado; pedidos de delivery exigem ao menos um). Todo endereço pertence a exatamente um cliente. Um endereço pode receber nenhuma ou várias entregas.
 
-### Entidade: FUNCIONARIO
+### Entidade: FUNCIONÁRIO
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_funcionario | Identificador único do funcionário | Obrigatório; não se repete |
@@ -190,18 +193,18 @@ Um funcionário pode atender nenhum ou vários pedidos e registrar nenhuma ou v�
 | data_hora | Data e hora do pedido | Obrigatório |
 | canal_atendimento | Canal pelo qual o pedido foi feito | Obrigatório; valores como balcão, delivery, WhatsApp |
 | status | Situação do pedido | Valores: recebido, em preparo, saiu para entrega, entregue, cancelado |
-| valor_total | Valor total do pedido em reais | Obrigatório; soma de quantidade × preco_unitario dos itens |
+| valor_total | Valor total do pedido em reais (atributo derivado) | Obrigatório; calculado pela soma de quantidade × preco_unitario dos itens |
 | observacao | Observações do pedido (ex.: sem cebola) | Opcional |
 
-Um pedido é atendido por no máximo um funcionário.
+Todo pedido é atendido por exatamente um funcionário, o que garante rastreabilidade.
 
-### Entidade: ITEM DE PEDIDO (relacionamento "contém" entre PEDIDO e PRODUTO)
+### Entidade: ITEM DE PEDIDO
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | quantidade | Quantidade do produto no pedido | Obrigatório; maior que zero |
 | preco_unitario | Preço cobrado por unidade no momento do pedido | Obrigatório; maior que zero; guarda o preço da época, mesmo que o preço do produto mude depois |
 
-Um pedido contém de 1 a n produtos. Um produto pode estar em nenhum ou vários pedidos.
+Relacionamento “contém” entre PEDIDO e PRODUTO. Um pedido contém de 1 a n produtos; um produto pode estar em nenhum ou vários pedidos.
 
 ### Entidade: PAGAMENTO
 | Atributo | Descrição | Regra de negócio associada |
@@ -218,10 +221,9 @@ Um pedido recebe de 1 a n pagamentos (permite dividir a conta em formas diferent
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_entrega | Identificador único da entrega | Obrigatório; não se repete |
-| endereco_entrega | Endereço de destino da entrega | Obrigatório |
 | status_entrega | Situação da entrega | Valores: pendente, saiu para entrega, entregue |
 
-A entrega só existe em pedidos de delivery: um pedido gera no máximo uma entrega, e toda entrega pertence a exatamente um pedido.
+A entrega só existe em pedidos de delivery: um pedido gera no máximo uma entrega, e toda entrega pertence a exatamente um pedido. O destino é dado pelo relacionamento “destina” com ENDEREÇO: toda entrega é destinada a exatamente um endereço do cliente.
 
 ### Entidade: DESPESA
 | Atributo | Descrição | Regra de negócio associada |
@@ -237,33 +239,35 @@ Toda despesa é registrada por exatamente um funcionário.
 
 
 ## 6\. Modelagem Conceitual (Entidades, Atributos, Relacionamentos)
+# Modelagem Conceitual (Entidades, Atributos, Relacionamentos)
+
 ## Entidades reconhecidas
-
-**CLIENTE** — representa as pessoas que fazem pedidos. O cliente é opcional no pedido porque o sistema precisa permitir vendas de balcão sem cadastro, mantendo a identificação quando necessária (como no delivery). Os endereços ficam em entidade própria (ver ENDERECO), e não como atributo direto de CLIENTE. O telefone_2 permite guardar um contato alternativo.
-
-**ENDERECO** — separada de CLIENTE para permitir que um mesmo cliente tenha mais de um endereço (residencial, trabalho, entrega). Todo cliente possui pelo menos um endereço cadastrado.
-
-**FUNCIONARIO** — representa os colaboradores. A associação ao pedido garante rastreabilidade de quem atendeu, e a associação à despesa mostra quem registrou o gasto. O atributo nivel_acesso define as permissões no sistema, a partir do cargo.
 
 **FORNECEDOR** — representa as empresas que abastecem o restaurante, permitindo relacioná-las às compras de produtos e insumos.
 
-**COMPRA** — representa uma aquisição feita junto a um fornecedor, concentrando data e valor total. Os produtos adquiridos são detalhados no relacionamento INCLUI.
+**COMPRA** — representa uma aquisição feita junto a um fornecedor, concentrando data e valor total (derivado dos itens). Os produtos adquiridos são detalhados no relacionamento INCLUI.
 
 **CATEGORIA** — criada para classificar os produtos (ex.: refeições, bebidas, lanches) e evitar repetir a informação de classificação em cada produto.
 
 **PRODUTO** — representa os itens comercializados, com preço de venda e controle de quantidade em estoque. O baixo estoque gera aviso.
 
-**PEDIDO** — representa uma operação de venda registrada, concentrando data/hora, canal de atendimento, status, valor total e observações. É a entidade central do modelo, ligada a cliente, funcionário, produtos, pagamentos e entrega.
+**CLIENTE** — representa as pessoas que fazem pedidos. O cliente é opcional no pedido porque o sistema precisa permitir vendas de balcão sem cadastro, mantendo a identificação quando necessária (como no delivery). Os endereços ficam em entidade própria (ver ENDEREÇO), e não como atributo direto de CLIENTE. O telefone_2 guarda um contato alternativo.
 
-**PAGAMENTO** — representa cada recebimento vinculado a um pedido, permitindo mais de uma forma de pagamento para o mesmo pedido (divisão de conta). Todo pedido possui ao menos um pagamento, que fica com status "pendente" até a quitação.
+**ENDEREÇO** — separada de CLIENTE para permitir que um mesmo cliente tenha mais de um endereço (residencial, trabalho, entrega). Um cliente de balcão pode não ter endereço, mas pedidos de delivery exigem ao menos um. É também o destino das entregas.
 
-**ENTREGA** — representa o envio de um pedido de delivery, com endereço de destino e status. Existe apenas nos pedidos que precisam ser entregues.
+**FUNCIONÁRIO** — representa os colaboradores. A associação ao pedido garante rastreabilidade de quem atendeu, e a associação à despesa mostra quem registrou o gasto. O atributo nivel_acesso define as permissões no sistema, a partir do cargo.
+
+**PEDIDO** — representa uma operação de venda registrada, concentrando data/hora, canal de atendimento, status, valor total (derivado dos itens) e observações. É a entidade central do modelo, ligada a cliente, funcionário, produtos, pagamentos e entrega.
+
+**PAGAMENTO** — representa cada recebimento vinculado a um pedido, permitindo mais de uma forma de pagamento para o mesmo pedido (divisão de conta). Todo pedido possui ao menos um pagamento, que fica com status “pendente” até a quitação.
+
+**ENTREGA** — representa o envio de um pedido de delivery, com status próprio. Existe apenas nos pedidos que precisam ser entregues, e seu destino é um ENDEREÇO cadastrado, evitando texto solto e duplicação de dados.
 
 **DESPESA** — representa os gastos do restaurante (ex.: aluguel, energia, insumos), sempre registrados por um funcionário.
 
 ## Atributos e classificações
 
-Os atributos de cada entidade, com chave primária e regras de negócio, estão detalhados no Dicionário de Dados. Em resumo:
+Os atributos de cada entidade, com regras de negócio, estão detalhados no Dicionário de Dados. Em resumo:
 
 | Entidade | Identificador | Atributos |
 |---|---|---|
@@ -272,16 +276,16 @@ Os atributos de cada entidade, com chave primária e regras de negócio, estão 
 | CATEGORIA | id_categoria | nome_categoria |
 | PRODUTO | id_produto | nome_produto, descricao, preco, quantidade_estoque |
 | CLIENTE | id_cliente | nome, telefone, telefone_2 |
-| ENDERECO | id_endereco | rua, numero, bairro, cep, complemento |
-| FUNCIONARIO | id_funcionario | nome, cargo, nivel_acesso |
+| ENDEREÇO | id_endereco | rua, numero, bairro, cep, complemento |
+| FUNCIONÁRIO | id_funcionario | nome, cargo, nivel_acesso |
 | PEDIDO | id_pedido | data_hora, canal_atendimento, status, valor_total, observacao |
 | PAGAMENTO | id_pagamento | forma_pagamento, valor, status_pagamento, data_hora |
-| ENTREGA | id_entrega | endereco_entrega, status_entrega |
+| ENTREGA | id_entrega | status_entrega |
 | DESPESA | id_despesa | descricao, categoria, data_despesa, valor |
 
-Os atributos **quantidade** e **custo_unitario** pertencem ao relacionamento INCLUI entre COMPRA e PRODUTO. Os atributos **quantidade** e **preco_unitario** pertencem ao relacionamento CONTEM entre PEDIDO e PRODUTO. Eles não são atributos do produto, mas da sua participação em uma compra ou pedido específico.
+Os atributos **quantidade** e **custo_unitario** pertencem ao relacionamento INCLUI entre COMPRA e PRODUTO. Os atributos **quantidade** e **preco_unitario** pertencem ao relacionamento CONTÉM entre PEDIDO e PRODUTO. Eles não são atributos do produto, mas da sua participação em uma compra ou pedido específico.
 
-Os atributos **valor_total** de COMPRA e de PEDIDO são derivados: resultam da soma dos itens (quantidade × custo_unitario e quantidade × preco_unitario, respectivamente).
+Os atributos **valor_total** de COMPRA e de PEDIDO são **derivados**: resultam da soma dos itens (quantidade × custo_unitario e quantidade × preco_unitario, respectivamente). No DER aparecem com círculo tracejado.
 
 ## Relacionamentos pertinentes
 
@@ -290,41 +294,42 @@ Os atributos **valor_total** de COMPRA e de PEDIDO são derivados: resultam da s
 | FORNECEDOR ↔ COMPRA (fornece) | (1,1) | (0,N) | Um para Muitos (1:N) |
 | COMPRA ↔ PRODUTO (inclui) | (0,N) | (1,N) | Muitos para Muitos (N:M), com atributos no relacionamento |
 | CATEGORIA ↔ PRODUTO (classifica) | (1,1) | (0,N) | Um para Muitos (1:N) |
-| PEDIDO ↔ PRODUTO (contem) | (0,N) | (1,N) | Muitos para Muitos (N:M), com atributos no relacionamento |
+| PEDIDO ↔ PRODUTO (contém) | (0,N) | (1,N) | Muitos para Muitos (N:M), com atributos no relacionamento |
 | CLIENTE ↔ PEDIDO (realiza) | (0,1) | (0,N) | Um para Muitos (1:N) Opcional |
-| FUNCIONARIO ↔ PEDIDO (atende) | (0,1) | (0,N) | Um para Muitos (1:N) Opcional |
-| CLIENTE ↔ ENDERECO (possui) | (1,1) | (1,N) | Um para Muitos (1:N) |
+| FUNCIONÁRIO ↔ PEDIDO (atende) | (1,1) | (0,N) | Um para Muitos (1:N) |
+| CLIENTE ↔ ENDEREÇO (possui) | (1,1) | (0,N) | Um para Muitos (1:N) |
+| ENDEREÇO ↔ ENTREGA (destina) | (1,1) | (0,N) | Um para Muitos (1:N) |
 | PEDIDO ↔ PAGAMENTO (recebe) | (1,1) | (1,N) | Um para Muitos (1:N) |
 | PEDIDO ↔ ENTREGA (gera) | (1,1) | (0,1) | Um para Um (1:1) Opcional |
-| FUNCIONARIO ↔ DESPESA (registra) | (1,1) | (0,N) | Um para Muitos (1:N) |
+| FUNCIONÁRIO ↔ DESPESA (registra) | (1,1) | (0,N) | Um para Muitos (1:N) |
+
+A cardinalidade escrita junto a uma entidade indica quantas ocorrências dela se associam a **uma** ocorrência da outra entidade.
 
 **FORNECEDOR ↔ COMPRA (1:N):** um fornecedor pode ter nenhuma ou várias compras; cada compra pertence a um único fornecedor.
 
-**COMPRA ↔ PRODUTO (N:M, relacionamento INCLUI):** uma compra inclui de um a vários produtos e um produto pode estar em várias compras. A quantidade comprada e o custo unitário não são atributos do produto, mas daquela compra específica.
+**COMPRA ↔ PRODUTO (N:M, relacionamento INCLUI):** uma compra inclui de um a vários produtos e um produto pode estar em várias compras. A quantidade comprada e o custo unitário pertencem àquela compra específica.
 
 **CATEGORIA ↔ PRODUTO (1:N):** cada produto pertence a uma categoria, evitando repetição de dados de classificação; uma categoria pode ter vários produtos.
 
-**PEDIDO ↔ PRODUTO (N:M, relacionamento CONTEM):** um pedido contém vários produtos e um produto pode estar em vários pedidos. A quantidade e o preço unitário pertencem à participação do produto no pedido, e o preço guarda o valor da época, mesmo que o preço do produto mude depois.
+**PEDIDO ↔ PRODUTO (N:M, relacionamento CONTÉM):** um pedido contém vários produtos e um produto pode estar em vários pedidos. A quantidade e o preço unitário pertencem à participação do produto no pedido, e o preço guarda o valor da época, mesmo que o preço do produto mude depois.
 
 **CLIENTE ↔ PEDIDO (1:N opcional):** cada pedido pode ou não estar associado a um cliente, respeitando a regra de venda de balcão sem cadastro.
 
-**FUNCIONARIO ↔ PEDIDO (1:N opcional):** cada pedido é atendido por no máximo um funcionário, dando rastreabilidade ao atendimento; um funcionário pode atender vários pedidos.
+**FUNCIONÁRIO ↔ PEDIDO (1:N):** todo pedido é atendido por exatamente um funcionário, dando rastreabilidade ao atendimento; um funcionário pode atender vários pedidos.
 
-**CLIENTE ↔ ENDERECO (1:N):** um cliente possui um ou mais endereços; cada endereço pertence a um único cliente.
+**CLIENTE ↔ ENDEREÇO (1:N):** um cliente possui nenhum ou vários endereços (clientes de balcão podem não ter endereço); cada endereço pertence a um único cliente.
+
+**ENDEREÇO ↔ ENTREGA (1:N):** toda entrega é destinada a exatamente um endereço cadastrado; um endereço pode receber nenhuma ou várias entregas.
 
 **PEDIDO ↔ PAGAMENTO (1:N):** permite que um mesmo pedido seja quitado com mais de uma forma de pagamento; todo pedido possui ao menos um registro de pagamento.
 
 **PEDIDO ↔ ENTREGA (1:1 opcional):** apenas pedidos de delivery geram entrega; cada pedido gera no máximo uma entrega e cada entrega pertence a um único pedido.
 
-**FUNCIONARIO ↔ DESPESA (1:N):** toda despesa é registrada por exatamente um funcionário, que pode registrar várias despesas.
+**FUNCIONÁRIO ↔ DESPESA (1:N):** toda despesa é registrada por exatamente um funcionário, que pode registrar várias despesas.
 
 ## Restrições e políticas organizacionais aplicadas ao modelo
 
-O cliente é opcional no pedido para permitir vendas de balcão sem cadastro, mas nome e telefone passam a ser obrigatórios nos pedidos de delivery. A entidade ENTREGA existe somente para pedidos de delivery, o que mantém o modelo enxuto para pedidos de balcão. O preço unitário é gravado no item do pedido para preservar o histórico de vendas, e o controle de acesso (nivel_acesso, definido pelo cargo do funcionário) é tratado como regra de negócio desde o nível conceitual. A separação de CLIENTE e ENDERECO também ajuda a isolar os dados pessoais dos dados operacionais.
-
-
-
-
+O cliente é opcional no pedido para permitir vendas de balcão sem cadastro, mas nome, telefone e ao menos um endereço passam a ser obrigatórios nos pedidos de delivery. A entidade ENTREGA existe somente para pedidos de delivery e aponta para um ENDEREÇO cadastrado, o que mantém o modelo enxuto para pedidos de balcão. Todo pedido tem um funcionário responsável, e o controle de acesso (nivel_acesso, definido pelo cargo) é tratado como regra de negócio desde o nível conceitual. O preço unitário é gravado no item do pedido para preservar o histórico de vendas. A separação de CLIENTE e ENDEREÇO também ajuda a isolar os dados pessoais dos dados operacionais.
 ---
 
 
