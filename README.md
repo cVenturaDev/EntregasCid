@@ -1,9 +1,6 @@
 # Entrega 1 — Modelo Conceitual (DER)
 ## Donna Claudia Restaurante e Lanchonete
 
-
----
-
 ## Metadados
 
 - Augusto - 48832588
