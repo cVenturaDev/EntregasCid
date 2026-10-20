@@ -237,8 +237,6 @@ Toda despesa é registrada por exatamente um funcionário.
 
 
 ## 6\. Modelagem Conceitual (Entidades, Atributos, Relacionamentos)
-# Modelagem Conceitual (Entidades, Atributos, Relacionamentos)
-
 ## Entidades reconhecidas
 
 **CLIENTE** — representa as pessoas que fazem pedidos. O cliente é opcional no pedido porque o sistema precisa permitir vendas de balcão sem cadastro, mantendo a identificação quando necessária (como no delivery). Os endereços ficam em entidade própria (ver ENDERECO), e não como atributo direto de CLIENTE. O telefone_2 permite guardar um contato alternativo.
