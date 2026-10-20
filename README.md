@@ -12,7 +12,12 @@
 
 ## Metadados
 
-- **Nomes dos alunos e RGM**
+
+- Augusto
+- Felipe
+- Lucas Freitas de Oliveira - 48587885
+- Matheus
+- Otavio Estevam Ventura Cristiano - 48763390
 
 ## 1\. Caracterização da Organização
 
