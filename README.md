@@ -9,7 +9,7 @@
 - Augusto - 48832588
 - Felipe Rodrigues - 47868384
 - Lucas Freitas de Oliveira - 48587885
-- Matheus Faustino 
+- Matheus Faustino - 47854928
 - Otavio Estevam Ventura Cristiano - 48763390
 
 ## 1 . Caracterização da Organização
