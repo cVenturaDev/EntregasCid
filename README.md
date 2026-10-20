@@ -328,8 +328,9 @@ A cardinalidade escrita junto a uma entidade indica quantas ocorrências dela se
 **FUNCIONÁRIO ↔ DESPESA (1:N):** toda despesa é registrada por exatamente um funcionário, que pode registrar várias despesas.
 
 ## Restrições e políticas organizacionais aplicadas ao modelo
+O cliente é opcional no pedido para permitir vendas de balcão sem cadastro, mas nome, telefone e ao menos um endereço passam a ser obrigatórios nos pedidos de delivery. A entidade ENTREGA existe somente para pedidos de delivery e aponta para um ENDEREÇO cadastrado, o que mantém o modelo enxuto para pedidos de balcão. Todo pedido tem um funcionário responsável, e o controle de acesso (nivel_acesso, definido pelo cargo) é tratado como regra de negócio desde o nível conceitual. O preço unitário é gravado no item do pedido para preservar o histórico de vendas. A separação de CLIENTE e ENDEREÇO também ajuda a isolar os dados pessoais dos dados operacionais
 
-O cliente é opcional no pedido para permitir vendas de balcão sem cadastro, mas nome, telefone e ao menos um endereço passam a ser obrigatórios nos pedidos de delivery. A entidade ENTREGA existe somente para pedidos de delivery e aponta para um ENDEREÇO cadastrado, o que mantém o modelo enxuto para pedidos de balcão. Todo pedido tem um funcionário responsável, e o controle de acesso (nivel_acesso, definido pelo cargo) é tratado como regra de negócio desde o nível conceitual. O preço unitário é gravado no item do pedido para preservar o histórico de vendas. A separação de CLIENTE e ENDEREÇO também ajuda a isolar os dados pessoais dos dados operacionais.
+.
 ---
 
 
