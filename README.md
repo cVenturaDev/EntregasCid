@@ -110,19 +110,141 @@ A **cozinha** é a área que mais depende de trabalho em conjunto: o pedido prec
 
 ## 5\. Dicionário de Dados Conceitual (Preliminar)
 
-*(vale 10% — Dimensão Procedimental \- Segue o modelo do arquivo 02-03g\_Exemplo\_Dicionario\_Dados.pdf)*
-
-Para cada entidade identificada, liste:
-
+### FORNECEDOR
 | Atributo | Descrição | Regra de negócio associada |
-| :---- | :---- | :---- |
-| *nome do atributo* | *o que ele representa* | *se houver alguma regra (obrigatoriedade, valores possíveis, etc.)* |
+|---|---|---|
+| id_fornecedor | Identificador único do fornecedor | Obrigatório; não se repete |
+| nome_empresa | Nome da empresa fornecedora | Obrigatório |
+| contato | Forma de contato (telefone, e-mail ou responsável) | Opcional |
 
-*Mantenha o dicionário organizado e padronizado (mesmo formato de tabela para todas as entidades).*
+### COMPRA
+| Atributo | Descrição | Regra de negócio associada |
+|---|---|---|
+| id_compra | Identificador único da compra | Obrigatório; não se repete |
+| data_compra | Data da compra de insumos/produtos | Obrigatório |
+| valor_total | Valor total da compra em reais | Obrigatório; soma de quantidade × custo_unitario dos itens |
 
-**Atenção à privacidade:** se forem usados exemplos de valores para ilustrar os atributos, esses exemplos devem ser **fictícios** — não utilize dados reais de clientes, fiéis, beneficiários, doadores ou funcionários da organização (nomes, CPFs, contatos etc.), mesmo que tenham sido observados durante a pesquisa de campo. Os exemplos devem apenas ser **coerentes com as operações reais** observadas.
+Toda compra pertence a exatamente um fornecedor. Um fornecedor pode ter nenhuma ou várias compras.
 
+### ITEM DE COMPRA (relacionamento "inclui" entre COMPRA e PRODUTO)
+| Atributo | Descrição | Regra de negócio associada |
+|---|---|---|
+| quantidade | Quantidade do produto comprada | Obrigatório; maior que zero |
+| custo_unitario | Custo de cada unidade na compra, em reais | Obrigatório; maior que zero |
+
+Uma compra inclui de 1 a n produtos. Um produto pode estar em nenhuma ou várias compras.
+
+### CATEGORIA
+| Atributo | Descrição | Regra de negócio associada |
+|---|---|---|
+| id_categoria | Identificador único da categoria | Obrigatório; não se repete |
+| nome_categoria | Nome da categoria (ex.: refeições, bebidas, lanches) | Obrigatório |
+
+### PRODUTO
+| Atributo | Descrição | Regra de negócio associada |
+|---|---|---|
+| id_produto | Identificador único do produto | Obrigatório; não se repete |
+| nome_produto | Nome do produto | Obrigatório |
+| descricao | Descrição do produto | Opcional |
+| preco | Preço de venda em reais | Obrigatório; maior que zero |
+| quantidade_estoque | Quantidade disponível | Obrigatório; não pode ser negativa; baixo estoque gera aviso |
+
+Todo produto pertence a exatamente uma categoria. Uma categoria pode ter nenhum ou vários produtos.
+
+### CLIENTE
+| Atributo | Descrição | Regra de negócio associada |
+|---|---|---|
+| id_cliente | Identificador único do cliente (ex.: CLI-001) | Obrigatório; não se repete |
+| nome | Nome do cliente | Obrigatório nos pedidos de delivery; opcional em vendas de balcão |
+| telefone | Telefone principal | Obrigatório nos pedidos de delivery |
+| telefone_2 | Telefone alternativo | Opcional |
+
+Um cliente pode fazer nenhum ou vários pedidos. Um pedido tem no máximo um cliente (pode não ter, em vendas de balcão).
+
+### ENDERECO
+| Atributo | Descrição | Regra de negócio associada |
+|---|---|---|
+| id_endereco | Identificador único do endereço | Obrigatório; não se repete |
+| rua | Logradouro | Obrigatório |
+| numero | Número do imóvel | Obrigatório |
+| bairro | Bairro | Obrigatório |
+| cep | Código postal | Formato 00000-000 |
+| complemento | Complemento (apartamento, bloco, referência) | Opcional |
+
+Todo cliente possui de 1 a n endereços. Todo endereço pertence a exatamente um cliente.
+
+### FUNCIONARIO
+| Atributo | Descrição | Regra de negócio associada |
+|---|---|---|
+| id_funcionario | Identificador único do funcionário | Obrigatório; não se repete |
+| nome | Nome do funcionário | Obrigatório |
+| cargo | Função exercida (ex.: proprietária, gerente, cozinha) | Obrigatório |
+| nivel_acesso | Nível de permissão no sistema | Obrigatório; definido a partir do cargo |
+
+Um funcionário pode atender nenhum ou vários pedidos e registrar nenhuma ou várias despesas.
+
+### PEDIDO
+| Atributo | Descrição | Regra de negócio associada |
+|---|---|---|
+| id_pedido | Identificador único do pedido (ex.: PED-001) | Obrigatório; não se repete |
+| data_hora | Data e hora do pedido | Obrigatório |
+| canal_atendimento | Canal pelo qual o pedido foi feito | Obrigatório; valores como balcão, delivery, WhatsApp |
+| status | Situação do pedido | Valores: recebido, em preparo, saiu para entrega, entregue, cancelado |
+| valor_total | Valor total do pedido em reais | Obrigatório; soma de quantidade × preco_unitario dos itens |
+| observacao | Observações do pedido (ex.: sem cebola) | Opcional |
+
+Um pedido é atendido por no máximo um funcionário.
+
+### ITEM DE PEDIDO (relacionamento "contém" entre PEDIDO e PRODUTO)
+| Atributo | Descrição | Regra de negócio associada |
+|---|---|---|
+| quantidade | Quantidade do produto no pedido | Obrigatório; maior que zero |
+| preco_unitario | Preço cobrado por unidade no momento do pedido | Obrigatório; maior que zero; guarda o preço da época, mesmo que o preço do produto mude depois |
+
+Um pedido contém de 1 a n produtos. Um produto pode estar em nenhum ou vários pedidos.
+
+### PAGAMENTO
+| Atributo | Descrição | Regra de negócio associada |
+|---|---|---|
+| id_pagamento | Identificador único do pagamento | Obrigatório; não se repete |
+| forma_pagamento | Meio de pagamento | Valores: dinheiro, Pix, cartão de crédito, cartão de débito |
+| valor | Valor pago em reais | Obrigatório; maior que zero |
+| status_pagamento | Situação do pagamento | Valores: pendente, pago, reembolsado |
+| data_hora | Data e hora do pagamento | Obrigatório |
+
+Um pedido recebe de 1 a n pagamentos (permite dividir a conta em formas diferentes). Todo pagamento pertence a exatamente um pedido.
+
+### ENTREGA
+| Atributo | Descrição | Regra de negócio associada |
+|---|---|---|
+| id_entrega | Identificador único da entrega | Obrigatório; não se repete |
+| endereco_entrega | Endereço de destino da entrega | Obrigatório |
+| status_entrega | Situação da entrega | Valores: pendente, saiu para entrega, entregue |
+
+A entrega só existe em pedidos de delivery: um pedido gera no máximo uma entrega, e toda entrega pertence a exatamente um pedido.
+
+### DESPESA
+| Atributo | Descrição | Regra de negócio associada |
+|---|---|---|
+| id_despesa | Identificador único da despesa | Obrigatório; não se repete |
+| descricao | Descrição da despesa | Obrigatório |
+| categoria | Tipo da despesa (ex.: aluguel, energia, insumos) | Obrigatório |
+| data_despesa | Data da despesa | Obrigatório |
+| valor | Valor da despesa em reais | Obrigatório; maior que zero |
+
+Toda despesa é registrada por exatamente um funcionário.
 ---
+
+
+
+
+
+
+
+
+
+
+
 
 ## 6\. Modelagem Conceitual (Entidades, Atributos, Relacionamentos)
 
