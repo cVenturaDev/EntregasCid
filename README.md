@@ -83,7 +83,6 @@ A **cozinha** é a área que mais depende de trabalho em conjunto: o pedido prec
 ---
 
 ## 4\. Regras de Negócio
-## 4. Regras de Negócio
 
 ### Regras operacionais
 
