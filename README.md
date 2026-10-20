@@ -239,7 +239,7 @@ Toda despesa é registrada por exatamente um funcionário.
 
 
 ## 6\. Modelagem Conceitual (Entidades, Atributos, Relacionamentos)
-# Modelagem Conceitual (Entidades, Atributos, Relacionamentos)
+
 
 ## Entidades reconhecidas
 
