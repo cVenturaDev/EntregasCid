@@ -110,14 +110,14 @@ A **cozinha** é a área que mais depende de trabalho em conjunto: o pedido prec
 
 ## 5\. Dicionário de Dados Conceitual (Preliminar)
 
-### FORNECEDOR
+### Entidade: FORNECEDOR
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_fornecedor | Identificador único do fornecedor | Obrigatório; não se repete |
 | nome_empresa | Nome da empresa fornecedora | Obrigatório |
 | contato | Forma de contato (telefone, e-mail ou responsável) | Opcional |
 
-### COMPRA
+### Entidade: COMPRA
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_compra | Identificador único da compra | Obrigatório; não se repete |
@@ -126,7 +126,7 @@ A **cozinha** é a área que mais depende de trabalho em conjunto: o pedido prec
 
 Toda compra pertence a exatamente um fornecedor. Um fornecedor pode ter nenhuma ou várias compras.
 
-### ITEM DE COMPRA (relacionamento "inclui" entre COMPRA e PRODUTO)
+### Entidade: ITEM DE COMPRA (relacionamento "inclui" entre COMPRA e PRODUTO)
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | quantidade | Quantidade do produto comprada | Obrigatório; maior que zero |
@@ -134,13 +134,13 @@ Toda compra pertence a exatamente um fornecedor. Um fornecedor pode ter nenhuma 
 
 Uma compra inclui de 1 a n produtos. Um produto pode estar em nenhuma ou várias compras.
 
-### CATEGORIA
+###  Entidade: CATEGORIA
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_categoria | Identificador único da categoria | Obrigatório; não se repete |
 | nome_categoria | Nome da categoria (ex.: refeições, bebidas, lanches) | Obrigatório |
 
-### PRODUTO
+### Entidade: PRODUTO
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_produto | Identificador único do produto | Obrigatório; não se repete |
@@ -151,7 +151,7 @@ Uma compra inclui de 1 a n produtos. Um produto pode estar em nenhuma ou várias
 
 Todo produto pertence a exatamente uma categoria. Uma categoria pode ter nenhum ou vários produtos.
 
-### CLIENTE
+### Entidade: CLIENTE
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_cliente | Identificador único do cliente (ex.: CLI-001) | Obrigatório; não se repete |
@@ -161,7 +161,7 @@ Todo produto pertence a exatamente uma categoria. Uma categoria pode ter nenhum 
 
 Um cliente pode fazer nenhum ou vários pedidos. Um pedido tem no máximo um cliente (pode não ter, em vendas de balcão).
 
-### ENDERECO
+### Entidade: ENDERECO
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_endereco | Identificador único do endereço | Obrigatório; não se repete |
@@ -173,7 +173,7 @@ Um cliente pode fazer nenhum ou vários pedidos. Um pedido tem no máximo um cli
 
 Todo cliente possui de 1 a n endereços. Todo endereço pertence a exatamente um cliente.
 
-### FUNCIONARIO
+### Entidade: FUNCIONARIO
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_funcionario | Identificador único do funcionário | Obrigatório; não se repete |
@@ -183,7 +183,7 @@ Todo cliente possui de 1 a n endereços. Todo endereço pertence a exatamente um
 
 Um funcionário pode atender nenhum ou vários pedidos e registrar nenhuma ou várias despesas.
 
-### PEDIDO
+### Entidade: PEDIDO
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_pedido | Identificador único do pedido (ex.: PED-001) | Obrigatório; não se repete |
@@ -195,7 +195,7 @@ Um funcionário pode atender nenhum ou vários pedidos e registrar nenhuma ou v�
 
 Um pedido é atendido por no máximo um funcionário.
 
-### ITEM DE PEDIDO (relacionamento "contém" entre PEDIDO e PRODUTO)
+### Entidade: ITEM DE PEDIDO (relacionamento "contém" entre PEDIDO e PRODUTO)
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | quantidade | Quantidade do produto no pedido | Obrigatório; maior que zero |
@@ -203,7 +203,7 @@ Um pedido é atendido por no máximo um funcionário.
 
 Um pedido contém de 1 a n produtos. Um produto pode estar em nenhum ou vários pedidos.
 
-### PAGAMENTO
+### Entidade: PAGAMENTO
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_pagamento | Identificador único do pagamento | Obrigatório; não se repete |
@@ -214,7 +214,7 @@ Um pedido contém de 1 a n produtos. Um produto pode estar em nenhum ou vários 
 
 Um pedido recebe de 1 a n pagamentos (permite dividir a conta em formas diferentes). Todo pagamento pertence a exatamente um pedido.
 
-### ENTREGA
+### Entidade: ENTREGA
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_entrega | Identificador único da entrega | Obrigatório; não se repete |
@@ -223,7 +223,7 @@ Um pedido recebe de 1 a n pagamentos (permite dividir a conta em formas diferent
 
 A entrega só existe em pedidos de delivery: um pedido gera no máximo uma entrega, e toda entrega pertence a exatamente um pedido.
 
-### DESPESA
+### Entidade: DESPESA
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
 | id_despesa | Identificador único da despesa | Obrigatório; não se repete |
