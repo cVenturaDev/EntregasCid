@@ -331,10 +331,9 @@ O cliente é opcional no pedido para permitir vendas de balcão sem cadastro, ma
 
 
 ## 7\. Diagrama Entidade-Relacionamento (DER)
-![Diagrama Entidade-Relacionamento](DER/DER%20conceitual.png)
+![Diagrama Entidade-Relacionamento](DER/der%20conceitual.png)
 
 📁 [Abrir a pasta do DER](DER)
-
 
 ---
 
