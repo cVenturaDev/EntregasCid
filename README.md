@@ -9,6 +9,8 @@
 - Matheus Faustino - 47854928
 - Otavio Estevam Ventura Cristiano - 48763390
 
+  ---
+
 ## 1 . Caracterização da Organização
 **Nome e natureza da organização:** Donna Claudia Restaurante e Lanchonete, empresa privada do ramo alimentício (CNPJ 36.276.829/0001-69), que vende refeições e lanches.
 
@@ -32,9 +34,6 @@
 - Responsável: proprietária do restaurante, que acompanha a administração. [PREENCHER nome e confirmar autorização para uso do nome]
 - Contatos (telefone, e-mail, site, Instagram): [PREENCHER]
 - Fotos da visita / link do Google Maps: [PREENCHER]
-
-
-
 ---
 
 ## 2\. Processos de Negócio
@@ -51,7 +50,6 @@
 
 A **cozinha** é a área que mais depende de trabalho em conjunto: o pedido precisa ser recebido, preparado e encaminhado corretamente. Não são realizados eventos nem campanhas.
 
----
 ## 3. Requisitos do Sistema
 
 ### 3.1 Requisitos Funcionais
@@ -75,8 +73,6 @@ A **cozinha** é a área que mais depende de trabalho em conjunto: o pedido prec
 - RNF05 — **Privacidade:** dados pessoais dos clientes acessíveis apenas a quem precisa deles, em conformidade com a LGPD.
 - RNF06 — **Persistência:** armazenar o histórico de vendas, pedidos e gastos ao longo dos meses (prazo de guarda ainda a definir).
 - RNF07 — **Contingência:** em caso de indisponibilidade, o controle pode ser manual, com atualização posterior dos registros.
-
-
 ---
 
 ## 4\. Regras de Negócio
@@ -327,7 +323,6 @@ A cardinalidade escrita junto a uma entidade indica quantas ocorrências dela se
 ## Restrições e políticas organizacionais aplicadas ao modelo
 O cliente é opcional no pedido para permitir vendas de balcão sem cadastro, mas nome, telefone e ao menos um endereço passam a ser obrigatórios nos pedidos de delivery. A entidade ENTREGA existe somente para pedidos de delivery e aponta para um ENDEREÇO cadastrado, o que mantém o modelo enxuto para pedidos de balcão. Todo pedido tem um funcionário responsável, e o controle de acesso (nivel_acesso, definido pelo cargo) é tratado como regra de negócio desde o nível conceitual. O preço unitário é gravado no item do pedido para preservar o histórico de vendas. A separação de CLIENTE e ENDEREÇO também ajuda a isolar os dados pessoais dos dados operacionais
 
-.
 ---
 
 
