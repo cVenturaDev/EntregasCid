@@ -331,16 +331,10 @@ O cliente é opcional no pedido para permitir vendas de balcão sem cadastro, ma
 
 
 ## 7\. Diagrama Entidade-Relacionamento (DER)
+![Diagrama Entidade-Relacionamento](DER/DER%20conceitual.png)
 
-*(vale 20% — é o item de maior peso da entrega)*
+📁 [Abrir a pasta do DER](DER)
 
-- Anexe o DER (em imagem).  
-- O diagrama deve representar corretamente:  
-  - Entidades  
-  - Atributos  
-  - Relacionamentos  
-  - **Cardinalidades**  
-- O modelo deve ser **consistente** e já demonstrar potencial de **escalabilidade e integração** (pensando nas próximas etapas do projeto).
 
 ---
 
