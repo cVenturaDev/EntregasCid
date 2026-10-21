@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Dicionário de Dados — Donna Claudia Restaurante e Lanchonete</title><style>:root{--bg:#fbfaf7;--fg:#1f2a2e;--muted:#5d6b70;--line:#d9d6cc;--head:#1f4d47;--alt:#f2f0e9;--chip:#e4efec}
+@media (prefers-color-scheme:dark){:root{--bg:#161b1c;--fg:#e6ebea;--muted:#9fb0b2;--line:#34403f;--head:#2c6b62;--alt:#1d2425;--chip:#22403c}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,serif;padding:2rem 1rem 4rem}
+main{max-width:920px;margin:0 auto}h1{font-size:1.9rem;margin:0 0 .25rem}
+.sub{color:var(--muted);margin:0 0 2rem;font-family:system-ui,sans-serif;font-size:.95rem}
+nav{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:2.5rem;font-family:system-ui,sans-serif;font-size:.85rem}
+nav a{background:var(--chip);color:var(--fg);padding:.25rem .65rem;border-radius:99px;text-decoration:none}
+nav a:hover,a:focus-visible{outline:2px solid var(--head)}section{margin-bottom:2.2rem}
+h2{font-size:1.25rem;margin:0 0 .6rem;padding-left:.7rem;border-left:5px solid var(--head)}
+.w{overflow-x:auto}table{width:100%;border-collapse:collapse;font-family:system-ui,sans-serif;font-size:.92rem}
+th,td{text-align:left;padding:.5rem .7rem;border:1px solid var(--line);vertical-align:top}
+th{background:var(--head);color:#fff}tbody tr:nth-child(even){background:var(--alt)}
+td:first-child{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;white-space:nowrap}
+p.rel{margin:.6rem 0 0;color:var(--muted);font-size:.95rem}</style></head><body><main><h1>Dicionário de Dados</h1><p class="sub">Donna Claudia Restaurante e Lanchonete — baseado no DER Conceitual</p><nav>
+<a href="#fornecedor">Fornecedor</a>
+<a href="#compra">Compra</a>
+<a href="#item-compra">Item de compra</a>
+<a href="#categoria">Categoria</a>
+<a href="#produto">Produto</a>
+<a href="#cliente">Cliente</a>
+<a href="#endereco">Endereço</a>
+<a href="#funcionario">Funcionário</a>
+<a href="#pedido">Pedido</a>
+<a href="#item-pedido">Item de pedido</a>
+<a href="#pagamento">Pagamento</a>
+<a href="#entrega">Entrega</a>
+<a href="#despesa">Despesa</a>
+</nav>
+<section id="fornecedor"><h2>FORNECEDOR</h2><div class="w"><table><thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead><tbody>
+<tr><td>id_fornecedor</td><td>Identificador único do fornecedor</td><td>Obrigatório; não se repete</td></tr>
+<tr><td>nome_empresa</td><td>Nome da empresa fornecedora</td><td>Obrigatório</td></tr>
+<tr><td>contato</td><td>Forma de contato (telefone, e-mail ou responsável)</td><td>Opcional</td></tr>
+</tbody></table></div><p class="rel">Um fornecedor pode ter nenhuma ou várias compras.</p></section>
+<section id="compra"><h2>COMPRA</h2><div class="w"><table><thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead><tbody>
+<tr><td>id_compra</td><td>Identificador único da compra</td><td>Obrigatório; não se repete</td></tr>
+<tr><td>data_compra</td><td>Data da compra de insumos/produtos</td><td>Obrigatório</td></tr>
+<tr><td>valor_total</td><td>Valor total da compra em reais (atributo derivado)</td><td>Obrigatório; calculado pela soma de quantidade × custo_unitario dos itens</td></tr>
+</tbody></table></div><p class="rel">Toda compra pertence a exatamente um fornecedor.</p></section>
+<section id="item-compra"><h2>ITEM DE COMPRA</h2><div class="w"><table><thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead><tbody>
+<tr><td>quantidade</td><td>Quantidade do produto comprada</td><td>Obrigatório; maior que zero</td></tr>
+<tr><td>custo_unitario</td><td>Custo de cada unidade na compra, em reais</td><td>Obrigatório; maior que zero</td></tr>
+</tbody></table></div><p class="rel">Relacionamento “inclui” entre COMPRA e PRODUTO. Uma compra inclui de 1 a n produtos; um produto pode estar em nenhuma ou várias compras.</p></section>
+<section id="categoria"><h2>CATEGORIA</h2><div class="w"><table><thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead><tbody>
+<tr><td>id_categoria</td><td>Identificador único da categoria</td><td>Obrigatório; não se repete</td></tr>
+<tr><td>nome_categoria</td><td>Nome da categoria (ex.: refeições, bebidas, lanches)</td><td>Obrigatório</td></tr>
+</tbody></table></div><p class="rel">Uma categoria pode ter nenhum ou vários produtos.</p></section>
+<section id="produto"><h2>PRODUTO</h2><div class="w"><table><thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead><tbody>
+<tr><td>id_produto</td><td>Identificador único do produto</td><td>Obrigatório; não se repete</td></tr>
+<tr><td>nome_produto</td><td>Nome do produto</td><td>Obrigatório</td></tr>
+<tr><td>descricao</td><td>Descrição do produto</td><td>Opcional</td></tr>
+<tr><td>preco</td><td>Preço de venda em reais</td><td>Obrigatório; maior que zero</td></tr>
+<tr><td>quantidade_estoque</td><td>Quantidade disponível</td><td>Obrigatório; não pode ser negativa; baixo estoque gera aviso</td></tr>
+</tbody></table></div><p class="rel">Todo produto pertence a exatamente uma categoria.</p></section>
+<section id="cliente"><h2>CLIENTE</h2><div class="w"><table><thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead><tbody>
+<tr><td>id_cliente</td><td>Identificador único do cliente (ex.: CLI-001)</td><td>Obrigatório; não se repete</td></tr>
+<tr><td>nome</td><td>Nome do cliente</td><td>Obrigatório nos pedidos de delivery; opcional em vendas de balcão</td></tr>
+<tr><td>telefone</td><td>Telefone principal</td><td>Obrigatório nos pedidos de delivery</td></tr>
+<tr><td>telefone_2</td><td>Telefone alternativo</td><td>Opcional</td></tr>
+</tbody></table></div><p class="rel">Um cliente pode fazer nenhum ou vários pedidos. Um pedido tem no máximo um cliente (pode não ter, em vendas de balcão).</p></section>
+<section id="endereco"><h2>ENDEREÇO</h2><div class="w"><table><thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead><tbody>
+<tr><td>id_endereco</td><td>Identificador único do endereço</td><td>Obrigatório; não se repete</td></tr>
+<tr><td>rua</td><td>Logradouro</td><td>Obrigatório</td></tr>
+<tr><td>numero</td><td>Número do imóvel</td><td>Obrigatório</td></tr>
+<tr><td>bairro</td><td>Bairro</td><td>Obrigatório</td></tr>
+<tr><td>cep</td><td>Código postal</td><td>Formato 00000-000</td></tr>
+<tr><td>complemento</td><td>Complemento (apartamento, bloco, referência)</td><td>Opcional</td></tr>
+</tbody></table></div><p class="rel">Um cliente possui nenhum ou vários endereços (clientes de balcão podem não ter endereço cadastrado; pedidos de delivery exigem ao menos um). Todo endereço pertence a exatamente um cliente. Um endereço pode receber nenhuma ou várias entregas.</p></section>
+<section id="funcionario"><h2>FUNCIONÁRIO</h2><div class="w"><table><thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead><tbody>
+<tr><td>id_funcionario</td><td>Identificador único do funcionário</td><td>Obrigatório; não se repete</td></tr>
+<tr><td>nome</td><td>Nome do funcionário</td><td>Obrigatório</td></tr>
+<tr><td>cargo</td><td>Função exercida (ex.: proprietária, gerente, cozinha)</td><td>Obrigatório</td></tr>
+<tr><td>nivel_acesso</td><td>Nível de permissão no sistema</td><td>Obrigatório; definido a partir do cargo</td></tr>
+</tbody></table></div><p class="rel">Um funcionário pode atender nenhum ou vários pedidos e registrar nenhuma ou várias despesas.</p></section>
+<section id="pedido"><h2>PEDIDO</h2><div class="w"><table><thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead><tbody>
+<tr><td>id_pedido</td><td>Identificador único do pedido (ex.: PED-001)</td><td>Obrigatório; não se repete</td></tr>
+<tr><td>data_hora</td><td>Data e hora do pedido</td><td>Obrigatório</td></tr>
+<tr><td>canal_atendimento</td><td>Canal pelo qual o pedido foi feito</td><td>Obrigatório; valores como balcão, delivery, WhatsApp</td></tr>
+<tr><td>status</td><td>Situação do pedido</td><td>Valores: recebido, em preparo, saiu para entrega, entregue, cancelado</td></tr>
+<tr><td>valor_total</td><td>Valor total do pedido em reais (atributo derivado)</td><td>Obrigatório; calculado pela soma de quantidade × preco_unitario dos itens</td></tr>
+<tr><td>observacao</td><td>Observações do pedido (ex.: sem cebola)</td><td>Opcional</td></tr>
+</tbody></table></div><p class="rel">Todo pedido é atendido por exatamente um funcionário, o que garante rastreabilidade.</p></section>
+<section id="item-pedido"><h2>ITEM DE PEDIDO</h2><div class="w"><table><thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead><tbody>
+<tr><td>quantidade</td><td>Quantidade do produto no pedido</td><td>Obrigatório; maior que zero</td></tr>
+<tr><td>preco_unitario</td><td>Preço cobrado por unidade no momento do pedido</td><td>Obrigatório; maior que zero; guarda o preço da época, mesmo que o preço do produto mude depois</td></tr>
+</tbody></table></div><p class="rel">Relacionamento “contém” entre PEDIDO e PRODUTO. Um pedido contém de 1 a n produtos; um produto pode estar em nenhum ou vários pedidos.</p></section>
+<section id="pagamento"><h2>PAGAMENTO</h2><div class="w"><table><thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead><tbody>
+<tr><td>id_pagamento</td><td>Identificador único do pagamento</td><td>Obrigatório; não se repete</td></tr>
+<tr><td>forma_pagamento</td><td>Meio de pagamento</td><td>Valores: dinheiro, Pix, cartão de crédito, cartão de débito</td></tr>
+<tr><td>valor</td><td>Valor pago em reais</td><td>Obrigatório; maior que zero</td></tr>
+<tr><td>status_pagamento</td><td>Situação do pagamento</td><td>Valores: pendente, pago, reembolsado</td></tr>
+<tr><td>data_hora</td><td>Data e hora do pagamento</td><td>Obrigatório</td></tr>
+</tbody></table></div><p class="rel">Um pedido recebe de 1 a n pagamentos (permite dividir a conta em formas diferentes). Todo pagamento pertence a exatamente um pedido.</p></section>
+<section id="entrega"><h2>ENTREGA</h2><div class="w"><table><thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead><tbody>
+<tr><td>id_entrega</td><td>Identificador único da entrega</td><td>Obrigatório; não se repete</td></tr>
+<tr><td>status_entrega</td><td>Situação da entrega</td><td>Valores: pendente, saiu para entrega, entregue</td></tr>
+</tbody></table></div><p class="rel">A entrega só existe em pedidos de delivery: um pedido gera no máximo uma entrega, e toda entrega pertence a exatamente um pedido. O destino é dado pelo relacionamento “destina” com ENDEREÇO: toda entrega é destinada a exatamente um endereço do cliente.</p></section>
+<section id="despesa"><h2>DESPESA</h2><div class="w"><table><thead><tr><th>Atributo</th><th>Descrição</th><th>Regra de negócio associada</th></tr></thead><tbody>
+<tr><td>id_despesa</td><td>Identificador único da despesa</td><td>Obrigatório; não se repete</td></tr>
+<tr><td>descricao</td><td>Descrição da despesa</td><td>Obrigatório</td></tr>
+<tr><td>categoria</td><td>Tipo da despesa (ex.: aluguel, energia, insumos)</td><td>Obrigatório</td></tr>
+<tr><td>data_despesa</td><td>Data da despesa</td><td>Obrigatório</td></tr>
+<tr><td>valor</td><td>Valor da despesa em reais</td><td>Obrigatório; maior que zero</td></tr>
+</tbody></table></div><p class="rel">Toda despesa é registrada por exatamente um funcionário.</p></section>
+</main></body></html>
