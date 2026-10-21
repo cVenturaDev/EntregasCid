@@ -338,11 +338,56 @@ O cliente é opcional no pedido para permitir vendas de balcão sem cadastro, ma
 
 ---
 
-## 8\. Justificativa Técnica
+## 8. Justificativa Técnica
 
-*(vale 7,5% — sozinho, é o subcritério de maior peso dentro da Dimensão Conceitual)*
+A modelagem conceitual foi desenvolvida para representar, de forma estruturada, os principais processos operacionais do Donna Claudia Restaurante e Lanchonete, incluindo o cadastro de clientes, produtos, categorias, fornecedores, compras, pedidos, pagamentos, entregas, funcionários e despesas. A definição das entidades, atributos e relacionamentos foi baseada nas informações levantadas durante a pesquisa de campo, considerando as necessidades reais da organização, especialmente o controle dos pedidos de delivery, o acompanhamento do estoque, a rastreabilidade das vendas e o registro de cancelamentos e reembolsos. O modelo busca organizar as informações de maneira integrada, reduzir redundâncias e facilitar a futura implementação de um banco de dados.
 
-*Explique e defenda as decisões de abstração e modelagem tomadas: por que essas entidades, esses atributos, esses relacionamentos e essas cardinalidades — e não outras alternativas possíveis?*
+Algumas decisões de modelagem merecem destaque:
+
+- **Relacionamento N:M CONTÉM entre PEDIDO e PRODUTO, em vez de armazenar os produtos diretamente no PEDIDO:** um pedido pode conter vários produtos, e um mesmo produto pode estar presente em diversos pedidos. Armazenar os produtos em uma lista dentro de PEDIDO dificultaria as consultas e o controle individual dos itens. Por isso, o relacionamento CONTÉM possui os atributos `quantidade` e `preco_unitario`, que representam a participação de cada produto em um pedido específico. Essa decisão permite calcular os subtotais e o valor total da venda, além de facilitar consultas como os produtos mais vendidos e a quantidade comercializada em determinado período. Na modelagem lógica, esse relacionamento será convertido em uma tabela associativa.
+
+- **Relacionamento N:M INCLUI entre COMPRA e PRODUTO, em vez de vincular cada compra a apenas um produto:** uma compra realizada com um fornecedor pode incluir diferentes produtos e insumos, enquanto um mesmo produto pode ser adquirido em várias compras. Os atributos `quantidade` e `custo_unitario` foram associados ao relacionamento, pois representam as condições de aquisição de cada produto em uma compra específica. Essa estrutura permite registrar os custos de aquisição e calcular o valor total da compra sem limitar a operação a um único item.
+
+- **Separação da entidade CATEGORIA em relação a PRODUTO:** a criação de uma entidade específica para categorias permite classificar os produtos em grupos, como refeições, bebidas e lanches, sem repetir o nome da categoria em cada registro de produto. Cada produto pertence a exatamente uma categoria, enquanto uma categoria pode estar associada a vários produtos. Essa decisão facilita a organização do catálogo e permite futuras consultas e relatórios por categoria.
+
+- **Entidade ENDEREÇO separada de CLIENTE:** a separação permite que um cliente possua vários endereços, como residencial, comercial ou de entrega, sem duplicar os dados cadastrais do cliente. Além disso, a entidade ENTREGA pode ser vinculada diretamente a um endereço cadastrado, garantindo maior consistência das informações utilizadas no delivery. Essa decisão é especialmente relevante para o restaurante, que recebe pedidos por WhatsApp e aplicativos de entrega. Para pedidos de delivery, devem ser informados os dados necessários à identificação do cliente e ao destino da entrega, enquanto clientes de balcão podem não possuir endereço cadastrado.
+
+- **Relacionamento opcional entre CLIENTE e PEDIDO (0,1 para 0,N):** o cliente foi definido como opcional no pedido para permitir vendas presenciais sem a necessidade de realizar um cadastro. Essa decisão considera a regra de negócio RN02, segundo a qual vendas de balcão podem ocorrer sem identificação do cliente, enquanto pedidos de delivery exigem os dados cadastrais necessários ao atendimento. Dessa forma, o modelo atende aos diferentes canais de venda sem exigir informações desnecessárias em todas as operações.
+
+- **Relacionamento 1:N entre PEDIDO e PAGAMENTO, com pelo menos um pagamento por pedido:** cada pedido possui ao menos um registro de pagamento, inicialmente podendo apresentar a situação Pendente e posteriormente ser atualizado para Pago ou Reembolsado. A possibilidade de registrar vários pagamentos para um mesmo pedido permite dividir o valor entre diferentes formas de pagamento, como dinheiro, Pix e cartão. Essa estrutura também facilita o acompanhamento dos valores recebidos e a identificação de pedidos ainda não quitados. O registro de pagamentos e seus respectivos status contribui para o controle financeiro e para a organização dos casos de cancelamento e reembolso.
+
+- **Atributo `preco_unitario` no relacionamento CONTÉM, em vez de utilizar exclusivamente o preço atual de PRODUTO:** o preço de venda de um produto pode mudar ao longo do tempo. Caso o sistema utilizasse apenas o preço cadastrado atualmente, pedidos antigos poderiam apresentar valores incorretos em consultas e relatórios históricos. Por isso, o preço unitário é registrado no relacionamento entre PEDIDO e PRODUTO, preservando o valor efetivamente cobrado no momento da venda. O mesmo princípio é aplicado ao `custo_unitario` no relacionamento INCLUI, permitindo manter o custo praticado em cada compra.
+
+- **Entidade ENTREGA separada de PEDIDO, com relacionamento 1:1 opcional:** nem toda venda realizada pelo restaurante exige entrega, pois também existem pedidos atendidos presencialmente no balcão. Por esse motivo, a entidade ENTREGA foi criada separadamente, permitindo registrar o status da entrega apenas quando necessário. Cada pedido pode gerar, no máximo, uma entrega, e cada entrega está vinculada a exatamente um pedido. Essa decisão evita a criação de informações de entrega desnecessárias para vendas presenciais e permite acompanhar etapas como pendente, saiu para entrega e entregue.
+
+- **Entidade FUNCIONÁRIO relacionada a PEDIDO e DESPESA:** todo pedido é associado a um funcionário responsável pelo atendimento, enquanto toda despesa é registrada por um funcionário. Essa estrutura permite identificar quem realizou o atendimento e quem registrou determinado gasto, contribuindo para a rastreabilidade das operações. O atributo `cargo`, em conjunto com `nivel_acesso`, também permite representar as responsabilidades e as permissões de cada usuário, considerando que as informações financeiras devem permanecer sob controle da proprietária e do gerente, conforme as regras organizacionais levantadas.
+
+- **Entidade DESPESA separada das demais operações financeiras:** as despesas, como aluguel, energia e aquisição de insumos, foram representadas em uma entidade própria, com descrição, categoria, data e valor. Essa decisão permite registrar os gastos independentemente das vendas e possibilita comparar as receitas e despesas de um período. Assim, o modelo oferece suporte aos requisitos RF07 e RF08, relacionados à consulta do total vendido no mês e à geração de relatórios financeiros.
+
+- **Entidade FORNECEDOR relacionada a COMPRA:** cada compra pertence a exatamente um fornecedor, enquanto um fornecedor pode estar associado a nenhuma ou várias compras. Essa estrutura permite identificar a origem dos produtos e insumos adquiridos, organizar o histórico de compras e apoiar o acompanhamento dos custos de abastecimento do restaurante.
+
+- **Atributos derivados `valor_total` em PEDIDO e COMPRA:** os valores totais foram definidos como derivados porque podem ser calculados a partir dos respectivos itens. No pedido, o total resulta da soma das quantidades multiplicadas pelos preços unitários praticados; na compra, resulta da soma das quantidades multiplicadas pelos custos unitários. Essa decisão estabelece uma regra clara de cálculo e reduz o risco de inconsistências entre os valores individuais e os totais registrados. Na implementação física, deverá ser definida uma estratégia para calcular ou armazenar esses valores de maneira consistente.
+
+- **Controle de estoque representado em PRODUTO:** o atributo `quantidade_estoque` permite registrar a quantidade disponível de cada produto, respeitando a regra de que o saldo não pode ser negativo. Essa escolha atende à necessidade de acompanhar a disponibilidade dos itens e de emitir alertas quando o estoque estiver baixo. Como o restaurante já utiliza um sistema de gestão que oferece esse recurso, a modelagem considera essa necessidade operacional sem pressupor a substituição imediata da solução atualmente utilizada.
+
+- **Registro de status de PEDIDO e PAGAMENTO para apoiar cancelamentos e reembolsos:** os atributos `status` e `status_pagamento` permitem distinguir as etapas do atendimento e a situação financeira de cada operação. Essa separação é importante porque um pedido pode ser cancelado e exigir um reembolso ou o preparo de um novo pedido, situações identificadas durante o levantamento dos processos. O modelo prevê o registro dessas informações, enquanto as regras de autorização para cancelamentos, descontos e reembolsos deverão ser detalhadas nas próximas etapas do projeto.
+
+- **Separação entre dados operacionais e informações pessoais dos clientes:** os dados de identificação e contato são mantidos em CLIENTE, enquanto os endereços são armazenados em ENDEREÇO. Essa organização favorece a consistência cadastral e facilita a aplicação de controles de acesso, em conformidade com o requisito de privacidade e com a Lei Geral de Proteção de Dados Pessoais (LGPD). Na implementação, deverão ser definidos mecanismos de autenticação, autorização e proteção dos dados, limitando o acesso às informações pessoais e financeiras conforme a responsabilidade de cada usuário.
+
+O modelo conceitual foi estruturado considerando o porte do Donna Claudia Restaurante e Lanchonete, seus canais de atendimento e as necessidades identificadas na pesquisa de campo. As decisões adotadas procuram equilibrar simplicidade, organização e capacidade de evolução, sem introduzir entidades ou relacionamentos que não apresentem justificativa operacional. A estrutura também permite atender aos requisitos funcionais relacionados ao cadastro, às vendas, aos pagamentos, às entregas, ao estoque e às despesas.
+
+Por fim, o DER constitui a base para o desenvolvimento das próximas etapas do projeto. Na modelagem lógica, serão definidas as tabelas, as chaves primárias e estrangeiras e as restrições de integridade. Na modelagem física, serão especificados os tipos de dados, as validações, os índices e os demais mecanismos necessários à implementação do banco de dados. Também deverão ser detalhadas as regras de permissão, a política de armazenamento dos registros e os procedimentos para tratar cancelamentos, reembolsos e indisponibilidade do sistema.
+
+
+
+
+
+
+
+
+
+
+
 
 ---
 
