@@ -1,5 +1,6 @@
 # Entrega 1 — Modelo Conceitual (DER)
-## Donna Claudia Restaurante e Lanchonete
+
+### Donna Claudia Restaurante e Lanchonete
 
 ## Metadados
 
