@@ -37,7 +37,8 @@
 - Fotos da visita / link do Google Maps: [PREENCHER]
 ---
 
-## 2\. Processos de Negócio
+## 2. Processos de Negócio
+
 **Principais processos mapeados:**
 
 1. **Abertura e fechamento do dia:** a proprietária costuma abrir o restaurante; os funcionários fazem o fechamento no fim do expediente.
@@ -76,7 +77,7 @@ A **cozinha** é a área que mais depende de trabalho em conjunto: o pedido prec
 - RNF07 — **Contingência:** em caso de indisponibilidade, o controle pode ser manual, com atualização posterior dos registros.
 ---
 
-## 4\. Regras de Negócio
+## 4. Regras de Negócio
 
 ### Regras operacionais
 
@@ -102,7 +103,7 @@ A **cozinha** é a área que mais depende de trabalho em conjunto: o pedido prec
 
 ---
 
-## 5\. Dicionário de Dados Conceitual (Preliminar)
+## 5. Dicionário de Dados Conceitual (Preliminar)
 
 O dicionário completo também está disponível em HTML (`dicionariodedados.html`)
 
@@ -235,10 +236,10 @@ Toda despesa é registrada por exatamente um funcionário.
 ---
 
 
-## 6\. Modelagem Conceitual (Entidades, Atributos, Relacionamentos)
+## 6. Modelagem Conceitual (Entidades, Atributos, Relacionamentos)
 
 
-## Entidades reconhecidas
+### Entidades reconhecidas
 
 **FORNECEDOR** — representa as empresas que abastecem o restaurante, permitindo relacioná-las às compras de produtos e insumos.
 
