@@ -103,6 +103,9 @@ A **cozinha** é a área que mais depende de trabalho em conjunto: o pedido prec
 ---
 
 ## 5\. Dicionário de Dados Conceitual (Preliminar)
+
+O dicionário completo também está disponível em HTML (`dicionariodedados.html`)
+
 ###  Entidade: FORNECEDOR
 | Atributo | Descrição | Regra de negócio associada |
 |---|---|---|
