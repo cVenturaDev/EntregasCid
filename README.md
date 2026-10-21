@@ -382,7 +382,6 @@ Por fim, o DER constitui a base para o desenvolvimento das próximas etapas do p
 
 ## 9. Uso de Inteligência Artificial
 
-## 9. Uso de Inteligência Artificial
 
 | **Item** | **Registro** |
 |---|---|
