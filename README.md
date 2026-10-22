@@ -32,9 +32,9 @@
 
 **Evidências da organização:**
 - Endereço: Rua Maciel Monteiro, nº 264.
-- Responsável: proprietária do restaurante, que acompanha a administração. [PREENCHER nome e confirmar autorização para uso do nome]
-- Contatos (telefone, e-mail, site, Instagram): [PREENCHER]
-- Fotos da visita / link do Google Maps: [PREENCHER]
+- Responsável: Antonia Claudia Freitas da Silva Oliveira
+- Contatos (telefone, e-mail, site, Instagram): restaurante@donnaclaudia.com ; 1127439010 
+- Fotos da visita / link do Google Maps: https://share.google/BqbmznFcOiSz4x2k4
 ---
 
 ## 2. Processos de Negócio
