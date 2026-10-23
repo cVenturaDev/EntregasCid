@@ -398,7 +398,7 @@ Por fim, o DER constitui a base para o desenvolvimento das próximas etapas do p
 
 ## Referências Bibliográficas
 
-ELMASRI, Ramez; NAVATHE, Shamkant B. **Sistemas de Banco de Dados**. 7. ed. São Paulo: Pearson, 2011.
+ELMASRI, Ramez; NAVATHE, Shamkant B. **Sistemas de Banco de Dados**. 7. ed. São Paulo: Pearson, 2011
 
 
 
